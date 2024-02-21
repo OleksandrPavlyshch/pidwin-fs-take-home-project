@@ -19,12 +19,12 @@ export const styles = {
   toolbar: {
     display: "flex",
     justifyContent: "flex-end",
-    width: "1000px",
   },
   profile: {
     display: "flex",
-    justifyContent: "space-between",
-    width: "600px",
+    justifyContent: "flex-end",
+    margin: "0 0 0 auto",
+    flexDirection: "column",
   },
   userName: {
     display: "flex",
