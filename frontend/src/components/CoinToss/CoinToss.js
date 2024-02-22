@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     TextField,
     Button,
@@ -10,20 +10,25 @@ import {
     CircularProgress,
     Typography,
 } from "@mui/material";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { tossCoin } from "../../actions/tossCoin";
+import { getHistory } from "../../actions/getHistory";
 import * as yup from "yup";
 
 function CoinToss() {
     const [wager, setWager] = useState("");
     const [choice, setChoice] = useState("");
     const [errors, setErrors] = useState({});
-    const [tossResult, setTossResult] = useState('');
     const balance = useSelector((state) => state.balance);
     const [processing, setProcessStatus] = useState(false);
     const isFormDisabled = balance <= 0;
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getHistory());
+    }, [dispatch]);
 
     const validationSchema = yup.object({
         wager: yup
@@ -59,14 +64,33 @@ function CoinToss() {
         }
     };
 
+    const toastNotification = (result, bonus) => {
+        toast[result ? "success" : "error"](
+            `You ${result ? "Win" : "Lose"}${bonus ? ` Bonus X${bonus}` : ""}`,
+            {
+                position: "top-center",
+                autoClose: 300,
+                hideProgressBar: false,
+                closeOnClick: true,
+                closeButton: false,
+                draggable: false,
+                progress: undefined,
+            }
+        );
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const isValid = await validateForm();
         if (isValid) {
             setProcessStatus(true);
             dispatch(tossCoin({ wager, choice })).then((e) => {
-                setTossResult(`You ${choice === e.result ? "Win" : "Lose"}`);
-                setProcessStatus(false);
+                const result = choice === e.result;
+                setTimeout(() => {
+                    setProcessStatus(false);
+                    dispatch(getHistory());
+                    toastNotification(result, e.bonus);
+                }, 500);
             });
         }
     };
@@ -114,9 +138,11 @@ function CoinToss() {
                         />
                     </RadioGroup>
                     {errors.choice && (
-                        <div style={{ color: "red", textAlign: "center" }}>
+                        <Typography
+                            style={{ color: "red", textAlign: "center" }}
+                        >
                             {errors.choice}
-                        </div>
+                        </Typography>
                     )}
                     <Button
                         type="submit"
@@ -131,11 +157,6 @@ function CoinToss() {
                             "Toss Coin"
                         )}
                     </Button>
-                    {tossResult && (
-                        <Typography sx={{ py: 2, textAlign: "center" }}>
-                            {tossResult}
-                        </Typography>
-                    )}
                 </form>
             </Paper>
         </Box>

@@ -15,8 +15,15 @@ const auth = async (req, res, next) => {
       req.userId = decodedData?.sub;
     }
 
+    if (!req.userId) {
+      return res.status(401).json({ message: "Unauthenticated" });
+    }
+
+
     next();
-  } catch (error) { }
+  } catch (error) {
+
+  }
 };
 
 export default auth;

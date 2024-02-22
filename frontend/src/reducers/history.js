@@ -1,0 +1,11 @@
+import { GET_HISTORY } from "../constants/actionTypes";
+
+const historyReducer = (state = [], action) => {
+  switch (action.type) {
+    case GET_HISTORY:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+export default historyReducer;

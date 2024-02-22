@@ -5,7 +5,7 @@ import * as messages from "../messages";
 export const getBalance = () => async (dispatch) => {
   try {
     const { data } = await api.getBalance();
-    dispatch({ type: GET_BALANCE, payload: data.tokens });
+    dispatch({ type: GET_BALANCE, payload: data.balance });
   } catch (error) {
     messages.error(error.response.data.message);
   }

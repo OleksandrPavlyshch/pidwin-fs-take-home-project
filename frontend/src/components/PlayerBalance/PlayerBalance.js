@@ -12,7 +12,7 @@ const PlayerBalance = () => {
     }, [dispatch]);
 
     return (
-        <Stack spacing={1} direction="row" alignItems="center" sx={{ pt: 1 }}>
+        <Stack spacing={1} direction="row" alignItems="center" >
             <Typography variant="body2">Tokens:</Typography>
             <Typography variant="body1">{tokens}</Typography>
         </Stack>

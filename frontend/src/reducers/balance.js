@@ -1,6 +1,6 @@
 import { GET_BALANCE, UPDATE_BALANCE } from "../constants/actionTypes";
 
-const balansReducer = (state = 0, action) => {
+const balanceReducer = (state = 0, action) => {
   switch (action.type) {
     case GET_BALANCE:
       return action.payload;
@@ -10,4 +10,4 @@ const balansReducer = (state = 0, action) => {
       return state;
   }
 };
-export default balansReducer;
+export default balanceReducer;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Grow, Paper, Typography, Stack } from "@mui/material";
 import CoinToss from "../CoinToss/CoinToss";
+import HistoryTable from "../History/history";
 import { jwtDecode } from "jwt-decode";
 
 const Home = () => {
@@ -11,20 +12,11 @@ const Home = () => {
 
     return (
         <Grow in>
-            <Container component="main" maxWidth="sm">
+            <Container component="main" maxWidth="md">
                 {isSingedIn !== "null" && isSingedIn !== null ? (
                     <Stack spacing={2} direction="column">
-                        <Paper elevation={3}>
-                            <Typography
-                                variant="h4"
-                                align="center"
-                                color="primary"
-                            >
-                                {`Welcome ${user.name}`}
-                                form
-                            </Typography>
-                        </Paper>
                         <CoinToss />
+                        <HistoryTable/>
                     </Stack>
                 ) : (
                     <Paper elevation={3}>

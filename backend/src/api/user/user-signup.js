@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.js";
+import User from "../../models/user.js";
 
 const signup = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
@@ -36,7 +36,6 @@ const signup = async (req, res) => {
     res.status(200).json({ token });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
-    console.log(error);
   }
 };
 
